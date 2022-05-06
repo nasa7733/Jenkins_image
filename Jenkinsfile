@@ -10,6 +10,7 @@ pipeline {
               sh''' 
               mkdir -p creds
               echo $google_key | base64 -d > ./creds/creds.json
+	      echo $new_project | base64 -d > ./creds/new-gcp-account.json
              '''
             }
         }
@@ -17,7 +18,7 @@ pipeline {
     stage ('Configuration_on_old_project'){
             steps {
                 sh '''
-                 echo $new_project | base64 -d > ./creds/new-gcp-account.json
+                
                gcloud auth activate-service-account $OLD_PROJECT_SA --key-file=./creds/creds.json
 	       gcloud config set project $OLD_PROJECT_ID
 	       gcloud config set account $OLD_PROJECT_SA
